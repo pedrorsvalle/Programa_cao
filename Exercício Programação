@@ -1,0 +1,67 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<math.h>
+int main(){
+int n=0;
+printf("Entre com o numero de amostras coletadas: ");
+scanf("%d",&n);
+int i=0;
+int v=0;
+float valor[n];
+float soma=0;
+float media = 0;
+for(i =1; i<=n; i++){
+scanf("%f", &valor[i]);
+soma = soma + valor[i];
+}
+media = soma/n;
+
+float moda;
+float aux;
+int cont = 0;
+for (i = 0; i < n; i++) {
+	for (int k = i+1;k<n;k++) {
+		if (valor[i] >valor[k]) {
+			aux = valor[i];
+			valor[i] = valor[k];
+			valor[k] = aux;
+		}
+	}
+}
+for (i=1; i<n; i++) {
+	if (valor[i] == valor[i-1]) {
+		cont++;
+		if (cont > moda) {
+			moda = valor[i-1];
+		}
+	}
+}
+if (cont == 0) {
+	printf ("Nao existe moda.\n");
+}
+else {
+	printf ("Moda: %.2f.\n", moda);
+}
+
+float mediana;
+if (n%2==0) {
+	mediana = valor[n/2];
+}else{
+	mediana = (valor[n/(2-1)] + valor[n/2])/2;
+}
+float variancia = 0;
+float cont2 = 0;
+for(i=1;i<n;i++){
+	float soma2 = valor[i]-media;
+	float elevado = pow(soma2,2);
+	cont2 = cont2 + elevado;
+}
+variancia = cont2/n;
+float desvio = sqrt(variancia);
+
+printf ("Mediana: %.2f.\n", mediana);
+printf ("Variancia: %.2f.\n", variancia);
+printf ("Desvio padrão: %.2f.\n", desvio);
+printf ("Media com desvio padrao: %.2f +/- %.2f.", media, desvio);
+}
